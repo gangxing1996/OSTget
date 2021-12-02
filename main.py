@@ -45,23 +45,27 @@ if __name__ == '__main__':
         pass
     os.chdir(os.path.join(os.getcwd(),foldname))
 
+    import ipdb
+    ipdb.set_trace()
+
     for img_tag in soup.select("body table table table")[0].select("a"):
         img_url=img_tag.get("href")
         wget.download(img_url)
 
-    try:
-        hostname=urlparse(chaper_url).hostname
-        song_url=urlparse(chaper_url).scheme+"://"+hostname+soup.select("td.playlistDownloadSong a")[0].get("href")
-        song_req = urllib.request.Request(url=song_url, headers=headers)  
-        song_html=urllib.request.urlopen(song_req).read().decode("utf-8")
-        song_soup = BeautifulSoup(song_html, 'html.parser')
-        os.system("wget "+song_soup.select("span.songDownloadLink")[0].parent.get("href"))
-        os.system("wget "+song_soup.select("span.songDownloadLink")[1].parent.get("href"))
-        # wget.download(song_soup.select("span.songDownloadLink")[0].parent.get("href"))
-        # wget.download(song_soup.select("span.songDownloadLink")[1].parent.get("href"))
+    for song_url_tag in soup.select("td.playlistDownloadSong a"):
+        try:
+            hostname=urlparse(chaper_url).hostname
+            song_url=urlparse(chaper_url).scheme+"://"+hostname+song_url_tag.get("href")
+            song_req = urllib.request.Request(url=song_url, headers=headers)  
+            song_html=urllib.request.urlopen(song_req).read().decode("utf-8")
+            song_soup = BeautifulSoup(song_html, 'html.parser')
+            os.system("wget "+song_soup.select("span.songDownloadLink")[0].parent.get("href"))
+            os.system("wget "+song_soup.select("span.songDownloadLink")[1].parent.get("href"))
+            # wget.download(song_soup.select("span.songDownloadLink")[0].parent.get("href"))
+            # wget.download(song_soup.select("span.songDownloadLink")[1].parent.get("href"))
 
-    except:
-        pass
+        except:
+            pass
 
     import ipdb
     ipdb.set_trace()
