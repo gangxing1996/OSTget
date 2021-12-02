@@ -45,8 +45,8 @@ if __name__ == '__main__':
         pass
     os.chdir(os.path.join(os.getcwd(),foldname))
 
-    import ipdb
-    ipdb.set_trace()
+    # import ipdb
+    # ipdb.set_trace()
 
     for img_tag in soup.select("body table table table")[0].select("a"):
         img_url=img_tag.get("href")
@@ -67,5 +67,5 @@ if __name__ == '__main__':
         except:
             pass
 
-    import ipdb
-    ipdb.set_trace()
+    # import ipdb
+    # ipdb.set_trace()
