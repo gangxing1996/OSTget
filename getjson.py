@@ -21,7 +21,12 @@ if __name__ == '__main__':
 
     album_name=soup.select("h2")[0].get_text()
 
-    img_url=soup.select("body table div a img")[0].get("src")
+    img_num=0
+    try:
+        img_num=int(sys.argv[2])
+    except:
+        pass
+    img_url=soup.select("body table div a img")[img_num].get("src")
     # img_url=""
     # for img_tag in soup.select("body table div a"):
     #     img_url=img_tag.get("href")
